@@ -10,14 +10,15 @@ import {
   TextInput,
   ToastAndroid,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import {Button} from 'react-native-paper';
+import {RectButton, TouchableOpacity} from 'react-native-gesture-handler';
+import {Button, IconButton} from 'react-native-paper';
 
 const App = (props) => {
   const {inputPassword} = useRef();
   const {email, setEmail} = useState(null);
   const {password, setPassword} = useState(null);
   const [loading, setLoading] = useState(false);
+  const [hidePassword, setHidePassword] = useState(true);
 
   const onSubmit = () => {
     setLoading(true);
@@ -41,57 +42,79 @@ const App = (props) => {
             <Text style={styles.title}>Zwallet</Text>
           </View>
           <View style={styles.child}>
-            <View>
-              <View>
-                <Text style={styles.childTitle}>Login</Text>
-                <Text style={styles.descript}>
-                  Login to your existing account to access all the features in
-                  Zwallet.
-                </Text>
-              </View>
-              <View style={styles.inputItem}>
-                <TextInput
-                  inlineImageLeft="mail"
-                  inlineImagePadding={40}
-                  placeholder="Enter your email"
-                  autoCapitalize={'none'}
-                  value={email}
-                  onChangeText={(text) => setEmail(text)}
-                  onSubmitEditing={() => inputPassword.current.focus()}
-                  returnKeyType="next"
-                />
-              </View>
-              <View style={styles.inputItem}>
-                <TextInput
-                  inlineImageLeft="lock"
-                  inlineImagePadding={40}
-                  ref={inputPassword}
-                  value={password}
-                  placeholder="Enter your password"
-                  autoCapitalize={'none'}
-                  secureTextEntry={true}
-                  returnKeyType="send"
-                  // returnKeyLabel="Masuk"
-                  onChangeText={(text) => setPassword(text)}
-                  // onSubmitEditing={() => onSubmit()}
-                />
-                <View style={styles.eye} />
-              </View>
-              <View>
-                <TouchableOpacity>
-                  <Text style={styles.link}>Forgot Password?</Text>
-                </TouchableOpacity>
-              </View>
-              <View>
+            <View style={styles.wrapContent}>
+              <ScrollView>
+                <View>
+                  <Text style={styles.childTitle}>Login</Text>
+                  <Text style={styles.descript}>
+                    Login to your existing account to access all the features in
+                    Zwallet.
+                  </Text>
+                </View>
+                <View style={styles.inputItem}>
+                  <View style={{flex: 1}}>
+                    <TextInput
+                      inlineImageLeft="mail"
+                      inlineImagePadding={40}
+                      placeholder="Enter your email"
+                      autoCapitalize={'none'}
+                      value={email}
+                      onChangeText={(e) => setEmail(e)}
+                      onSubmitEditing={() => inputPassword.current.focus()}
+                      returnKeyType="next"
+                    />
+                  </View>
+                </View>
+                <View style={styles.inputItem}>
+                  <View style={{flex: 0.9}}>
+                    <TextInput
+                      inlineImageLeft="lock"
+                      inlineImagePadding={40}
+                      ref={inputPassword}
+                      value={password}
+                      placeholder="Enter your password"
+                      autoCapitalize={'none'}
+                      secureTextEntry={hidePassword}
+                      returnKeyType="send"
+                      onChangeText={(e) => setPassword(e)}
+                      onSubmitEditing={() => onSubmit()}
+                    />
+                  </View>
+                  <View style={{flex: 0.1}}>
+                    <IconButton
+                      icon={hidePassword ? 'eye-outline' : 'eye-off-outline'}
+                      color="#a9a9a9"
+                      onPress={() => setHidePassword(!hidePassword)}
+                    />
+                  </View>
+                </View>
+                <View style={styles.linkWrap}>
+                  <RectButton onPress={() => ToastAndroid.show('oii')}>
+                    <View>
+                      <Text style={styles.link}>Forgot Password?</Text>
+                    </View>
+                  </RectButton>
+                </View>
                 <Button
-                  onPress={() => onSubmit()}
-                  color="#116242"
                   mode="contained"
+                  onPress={() => onSubmit()}
+                  color="#6379F4"
                   disabled={loading}
-                  loading={loading}>
+                  loading={loading}
+                  style={styles.button}>
                   Login
                 </Button>
-              </View>
+                <Text style={styles.descript}>
+                  Don't have an account? Let's{'   '}
+                  <RectButton
+                    style={styles.linkWrap}
+                    onPress={() => ToastAndroid.show('oii')}>
+                    <View>
+                      <Text style={styles.link}>Signup</Text>
+                    </View>
+                  </RectButton>
+                </Text>
+              </ScrollView>
             </View>
           </View>
         </ScrollView>
