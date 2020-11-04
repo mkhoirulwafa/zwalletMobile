@@ -10,10 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/core": "^5.13.5",
     "@react-navigation/drawer": "^5.10.4",
     "@react-navigation/material-bottom-tabs": "^5.3.4",
     "@react-navigation/material-top-tabs": "^5.3.4",
+    "@react-navigation/native": "^5.8.5",
     "@react-navigation/stack": "^5.12.1",
     "axios": "^0.21.0",
     "luxon": "^1.25.0",
