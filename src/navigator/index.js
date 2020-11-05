@@ -1,7 +1,15 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {Login, Register, ResetPassword, NewPassword, CreatePin, PinCreated} from '../screens';
+import {
+  Login,
+  Register,
+  ResetPassword,
+  NewPassword,
+  CreatePin,
+  PinCreated,
+  Home,
+} from '../screens';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
@@ -11,7 +19,12 @@ const HomeStack = () => {
   const token = AsyncStorage.getItem('token');
   return (
     <>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Home"
+          component={Home}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="Login"
           component={Login}

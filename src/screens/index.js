@@ -6,6 +6,14 @@ import {
   CreatePin,
   PinCreated,
 } from './Auth';
-// import Home from './Home';
+import {Home} from './User';
 
-export {Login, Register, ResetPassword, NewPassword, CreatePin, PinCreated};
+export {
+  Login,
+  Register,
+  ResetPassword,
+  NewPassword,
+  CreatePin,
+  PinCreated,
+  Home,
+};
