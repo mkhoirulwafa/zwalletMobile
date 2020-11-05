@@ -4,9 +4,6 @@ import {styles} from '../styles';
 import ResetChild from './../../../components/Auth/ResetChild';
 
 const Auth = (props) => {
-  React.useEffect(() => {
-    console.log(props);
-  });
   return (
     <>
       <StatusBar barStyle="default" />

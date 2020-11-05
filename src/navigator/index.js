@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {Login, Register, ResetPassword, NewPassword} from '../screens';
+import {Login, Register, ResetPassword, NewPassword, CreatePin, PinCreated} from '../screens';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Stack = createStackNavigator();
@@ -30,6 +30,16 @@ const HomeStack = () => {
         <Stack.Screen
           name="NewPassword"
           component={NewPassword}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="CreatePin"
+          component={CreatePin}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PinCreated"
+          component={PinCreated}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

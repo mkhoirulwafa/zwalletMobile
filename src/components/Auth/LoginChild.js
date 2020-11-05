@@ -124,7 +124,6 @@ const styles2 = StyleSheet.create({
   flexNine: {flex: 0.9},
   flexOne: {flex: 0.1},
   white: {color: '#fff'},
-  topMargin: {marginTop: 10},
   primaryColor: {color: '#6379F4'},
 });
 

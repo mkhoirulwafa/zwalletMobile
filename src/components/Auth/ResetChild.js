@@ -32,7 +32,7 @@ const ResetChild = (props) => {
               </Text>
             </View>
             <View style={styles.inputItem}>
-              <View style={styles.fullFlex}>
+              <View style={styles2.fullFlex}>
                 <TextInput
                   underlineColorAndroid={emailFocus ? '#a9a9a9' : '#6379F4'}
                   inlineImageLeft={emailFocus ? 'mail' : 'mail_blue'}
@@ -65,10 +65,6 @@ const ResetChild = (props) => {
 };
 const styles2 = StyleSheet.create({
   fullFlex: {flex: 1},
-  flexNine: {flex: 0.9},
-  flexOne: {flex: 0.1},
   white: {color: '#fff'},
-  topMargin: {marginTop: 10},
-  primaryColor: {color: '#6379F4'},
 });
 export default ResetChild;

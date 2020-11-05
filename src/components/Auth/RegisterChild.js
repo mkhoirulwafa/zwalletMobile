@@ -22,9 +22,8 @@ const RegisterChild = (props) => {
       ToastAndroid.show(
         `Login Sukses, Selamat Datang ${email}`,
         ToastAndroid.SHORT,
-        props.navigation.navigate('Home'),
       );
-      // props.navigation.navigate('Home');
+      props.navigation.navigate('CreatePin');
       setLoading(false);
     }, 3000);
   };

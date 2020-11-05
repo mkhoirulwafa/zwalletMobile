@@ -1,9 +1,9 @@
 import React from 'react';
 import {SafeAreaView, ScrollView, View, Text, StatusBar} from 'react-native';
-import CreatePinChild from '../../../components/Auth/CreatePinChild';
+import PinCreatedChild from '../../../components/Auth/PinCreatedChild';
 import {styles} from '../styles';
 
-const CreatePin = (props) => {
+const PinCreated = (props) => {
   return (
     <>
       <StatusBar barStyle="default" />
@@ -14,11 +14,11 @@ const CreatePin = (props) => {
           <View>
             <Text style={styles.title}>Zwallet</Text>
           </View>
-          <CreatePinChild {...props} />
+          <PinCreatedChild {...props} />
         </ScrollView>
       </SafeAreaView>
     </>
   );
 };
 
-export default CreatePin;
+export default PinCreated;

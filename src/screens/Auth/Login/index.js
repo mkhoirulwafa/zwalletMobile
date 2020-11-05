@@ -4,9 +4,6 @@ import LoginChild from '../../../components/Auth/LoginChild';
 import {styles} from '../styles';
 
 const Auth = (props) => {
-  React.useEffect(() => {
-    console.log(props);
-  });
   return (
     <>
       <StatusBar barStyle="default" />
