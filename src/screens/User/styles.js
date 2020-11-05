@@ -2,7 +2,6 @@ import {Dimensions, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   scrollView: {
-    // overflow: 'scroll',
     backgroundColor: '#FAFCFF',
   },
   title: {

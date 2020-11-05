@@ -1,14 +1,6 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Dimensions,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import {IconButton} from 'react-native-paper';
-import {styles} from '../styles';
 import {FlatList, RectButton} from 'react-native-gesture-handler';
 
 const DashboardChild = (props) => {
@@ -58,66 +50,67 @@ const DashboardChild = (props) => {
   ];
   return (
     <>
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={styles.scrollView}>
-        <View style={styles2.fullFlex}>
-          <RectButton
-            style={styles2.btn}
-            backgroundColor="#E5E8ED"
-            uppercase={false}>
-            <IconButton icon="arrow-up" color="#6379F4" />
-            <View>
-              <Text style={styles2.labelBtn}>Transfer</Text>
+      <FlatList
+        data={transactions}
+        ListHeaderComponent={
+          <>
+            <View style={styles2.fullFlex}>
+              <RectButton
+                style={styles2.btn}
+                backgroundColor="#E5E8ED"
+                uppercase={false}>
+                <IconButton icon="arrow-up" color="#6379F4" />
+                <View>
+                  <Text style={styles2.labelBtn}>Transfer</Text>
+                </View>
+              </RectButton>
+              <RectButton
+                style={styles2.btn}
+                backgroundColor="#E5E8ED"
+                uppercase={false}
+                onPress={() => props.navigation.navigate('Topup')}>
+                <IconButton icon="plus" color="#6379F4" />
+                <View>
+                  <Text style={styles2.labelBtn}>Topup</Text>
+                </View>
+              </RectButton>
             </View>
-          </RectButton>
-          <RectButton
-            style={styles2.btn}
-            backgroundColor="#E5E8ED"
-            uppercase={false}>
-            <IconButton icon="plus" color="#6379F4" />
-            <View>
-              <Text style={styles2.labelBtn}>Topup</Text>
-            </View>
-          </RectButton>
-        </View>
-        <View style={styles2.fullFlex}>
-          <View style={styles2.flexFour}>
-            <Text style={styles2.labelBtn}>Transaction History</Text>
-          </View>
-          <View style={styles2.flexTwo}>
-            <RectButton alignSelf="center">
-              <View>
-                <Text style={styles2.primaryColor}>See all</Text>
+            <View style={styles2.fullFlex}>
+              <View style={styles2.flexFour}>
+                <Text style={styles2.labelBtn}>Transaction History</Text>
               </View>
-            </RectButton>
-          </View>
-        </View>
-        <FlatList
-          data={transactions}
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => {
-            return (
-              <View style={styles2.listItem} key={item.id}>
-                <View style={styles2.fullFlex}>
-                  <View style={styles2.flexTwo}>
-                    <Image style={[styles2.img]} source={{uri: item.avatar}} />
+              <View style={styles2.flexTwo}>
+                <RectButton alignSelf="center">
+                  <View>
+                    <Text style={styles2.primaryColor}>See all</Text>
                   </View>
-                  <View style={styles2.flexFour}>
-                    <Text style={styles2.listText}>{item.fullName}</Text>
-                    <Text style={styles2.listDescript}>{item.type}</Text>
-                  </View>
-                  <View style={styles2.amountList}>
-                    <Text style={styles2.amountList}>
-                      {(item.type === 'Transfer' ? '+Rp' : '-Rp') + item.amount}
-                    </Text>
-                  </View>
+                </RectButton>
+              </View>
+            </View>
+          </>
+        }
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item, index}) => {
+          return (
+            <View style={styles2.listItem} key={item.id}>
+              <View style={styles2.fullFlex}>
+                <View style={styles2.flexTwo}>
+                  <Image style={[styles2.img]} source={{uri: item.avatar}} />
+                </View>
+                <View style={styles2.flexFour}>
+                  <Text style={styles2.listText}>{item.fullName}</Text>
+                  <Text style={styles2.listDescript}>{item.type}</Text>
+                </View>
+                <View style={styles2.amountList}>
+                  <Text style={styles2.amountList}>
+                    {(item.type === 'Transfer' ? '+Rp' : '-Rp') + item.amount}
+                  </Text>
                 </View>
               </View>
-            );
-          }}
-        />
-      </ScrollView>
+            </View>
+          );
+        }}
+      />
     </>
   );
 };

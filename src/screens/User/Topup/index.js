@@ -4,15 +4,15 @@ import {
   View,
   Text,
   StatusBar,
-  Image,
   StyleSheet,
   Dimensions,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
-import {styles} from '../styles';
-import DashboardChild from './../../../components/User/DashboardChild';
+// import {styles} from '../styles';
+import TopupChild from './../../../components/User/TopupChild';
+import {RectButton} from 'react-native-gesture-handler';
 
-const Home = (props) => {
+const Topup = (props) => {
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#6379F4" />
@@ -20,22 +20,33 @@ const Home = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <Image
-                style={styles.img}
-                width="50"
-                source={require('C:/Users/Waferchoc/Desktop/ARKADEMY/week9/zwallet/android/app/src/main/res/drawable/prof/6.png')}
-              />
+              <RectButton onPress={() => props.navigation.goBack()}>
+                <IconButton icon="arrow-left" color="#fff" />
+              </RectButton>
             </View>
             <View style={styles2.flexFour}>
-              <Text style={styles2.text}>Balance</Text>
-              <Text style={styles2.semiBold}>Rp120.000</Text>
+              <Text style={styles2.semiBold}>Top Up</Text>
             </View>
-            <View>
-              <IconButton icon="bell-outline" color="#fff" />
+          </View>
+          <View style={styles2.listItem} key={2}>
+            <View style={styles2.fullFlex}>
+              <View style={styles2.flexTwo}>
+                <RectButton
+                  style={styles2.btn}
+                  backgroundColor="#E5E8ED"
+                  uppercase={false}
+                  onPress={() => props.navigation.navigate('Topup')}>
+                  <IconButton icon="plus" color="#6379F4" />
+                </RectButton>
+              </View>
+              <View style={styles2.flexFour}>
+                <Text style={styles2.listDescript}>Virtual Account Number</Text>
+                <Text style={styles2.listText}>2389 081393877946</Text>
+              </View>
             </View>
           </View>
         </View>
-        <DashboardChild {...props} />
+        <TopupChild />
       </SafeAreaView>
     </>
   );
@@ -54,7 +65,7 @@ const styles2 = StyleSheet.create({
     marginTop: 10,
   },
   wrapperTop: {
-    height: 100,
+    height: 200,
     backgroundColor: '#6379F4',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -71,11 +82,17 @@ const styles2 = StyleSheet.create({
   flexFive: {flex: 0.5},
   flexFour: {flex: 0.8, marginLeft: 10, paddingRight: 10},
   flexTwo: {flex: 0.2},
+  flexOne: {flex: 0.1},
   white: {color: '#fff'},
   topMargin: {marginTop: 10},
   primaryColor: {color: '#6379F4'},
   text: {fontSize: 14, padding: 5, color: '#fff', fontWeight: '200'},
-  semiBold: {fontSize: 16, padding: 2, fontWeight: '700', color: '#fff'},
+  semiBold: {
+    fontSize: 16,
+    marginVertical: 10,
+    fontWeight: '700',
+    color: '#fff',
+  },
   notification: {alignSelf: 'flex-end'},
   img: {
     width: 60,
@@ -86,7 +103,7 @@ const styles2 = StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 10,
     flex: 0.5,
-    paddingVertical: 8,
+    paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -97,8 +114,9 @@ const styles2 = StyleSheet.create({
     marginRight: 5,
   },
   listItem: {
-    marginTop: 20,
+    marginTop: 50,
     height: 100,
+    margin: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
@@ -120,14 +138,8 @@ const styles2 = StyleSheet.create({
   listDescript: {
     fontSize: 12,
     padding: 5,
-    color: '#4D4B57',
+    color: '#7A7886',
     fontWeight: '300',
   },
-  amountList: {
-    color: '#1EC15F',
-    alignItems: 'center',
-    paddingVertical: 10,
-    marginRight: 5,
-  },
 });
-export default Home;
+export default Topup;

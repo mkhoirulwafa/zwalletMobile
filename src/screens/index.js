@@ -6,7 +6,7 @@ import {
   CreatePin,
   PinCreated,
 } from './Auth';
-import {Home} from './User';
+import {Home, Topup} from './User';
 
 export {
   Login,
@@ -16,4 +16,5 @@ export {
   CreatePin,
   PinCreated,
   Home,
+  Topup,
 };

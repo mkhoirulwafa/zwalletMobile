@@ -9,6 +9,7 @@ import {
   CreatePin,
   PinCreated,
   Home,
+  Topup,
 } from '../screens';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -23,6 +24,11 @@ const HomeStack = () => {
         <Stack.Screen
           name="Home"
           component={Home}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Topup"
+          component={Topup}
           options={{headerShown: false}}
         />
         <Stack.Screen
