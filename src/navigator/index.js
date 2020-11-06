@@ -1,76 +1,80 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {Topup} from '../screens';
 import {
-  Login,
-  Register,
-  ResetPassword,
-  NewPassword,
-  CreatePin,
-  PinCreated,
-  Home,
-  Topup,
-} from '../screens';
-import AsyncStorage from '@react-native-community/async-storage';
+  HomeStack,
+  ProfileStack,
+  AuthStack,
+  TransferStack,
+} from './StackNavigator';
 
-const Stack = createStackNavigator();
+import {SafeAreaView, ScrollView, View, Text, StatusBar} from 'react-native';
+import {styles} from '../screens/Auth/styles';
+import {useSelector} from 'react-redux';
 
-const HomeStack = () => {
-  //   const Auth = useSelector((s) => s.Auth);
-  const token = AsyncStorage.getItem('token');
+const NotFound = (props) => {
   return (
     <>
-      <Stack.Navigator initialRouteName="Home">
+      <StatusBar barStyle="dark-content" color="#514F5B" />
+      <SafeAreaView>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic"
+          style={styles.scrollView}>
+          <View>
+            <Text style={styles.title}>404 Not Found</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  );
+};
+const Stack = createStackNavigator();
+const NotFoundStack = () => {
+  return (
+    <>
+      <Stack.Navigator initialRouteName="Dashboard">
         <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Topup"
-          component={Topup}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="Register"
-          component={Register}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="ResetPassword"
-          component={ResetPassword}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="NewPassword"
-          component={NewPassword}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="CreatePin"
-          component={CreatePin}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="PinCreated"
-          component={PinCreated}
+          name="NotFound"
+          component={NotFound}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
     </>
   );
 };
+const Tab = createBottomTabNavigator();
 
-const MainNavigator = (props) => {
+function MyTabs(props) {
+  const {isLogin} = useSelector((s) => s.Auth);
   return (
-    <NavigationContainer>
-      <HomeStack navigation={props.navigation} />
-    </NavigationContainer>
+    <>
+      {isLogin ? (
+        <Tab.Navigator>
+          <Tab.Screen name="Dashboard" component={HomeStack} />
+          <Tab.Screen name="Transfer" component={TransferStack} />
+          <Tab.Screen name="Topup" component={Topup} />
+          <Tab.Screen name="Profile" component={ProfileStack} />
+        </Tab.Navigator>
+      ) : (
+        <AuthStack navigation={props.navigation} />
+      )}
+    </>
+  );
+}
+const MainNavigator = (props) => {
+  const {isLogin} = useSelector((s) => s.Auth);
+  return (
+    <>
+      <NavigationContainer>
+        {isLogin ? (
+          <MyTabs navigation={props.navigation} />
+        ) : (
+          <AuthStack navigation={props.navigation} />
+        )}
+      </NavigationContainer>
+    </>
   );
 };
 
