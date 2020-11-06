@@ -8,8 +8,8 @@ import {
   StyleSheet,
   Dimensions,
 } from 'react-native';
+import {RectButton} from 'react-native-gesture-handler';
 import {IconButton} from 'react-native-paper';
-import {styles} from '../styles';
 import DashboardChild from './../../../components/User/DashboardChild';
 
 const Home = (props) => {
@@ -20,11 +20,15 @@ const Home = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <Image
-                style={styles.img}
-                width="50"
-                source={require('C:/Users/Waferchoc/Desktop/ARKADEMY/week9/zwallet/android/app/src/main/res/drawable/prof/6.png')}
-              />
+              <RectButton onPress={() => props.navigation.navigate('Profile')}>
+                <Image
+                  style={styles2.img}
+                  source={{
+                    uri:
+                      'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true',
+                  }}
+                />
+              </RectButton>
             </View>
             <View style={styles2.flexFour}>
               <Text style={styles2.text}>Balance</Text>
@@ -75,7 +79,7 @@ const styles2 = StyleSheet.create({
   topMargin: {marginTop: 10},
   primaryColor: {color: '#6379F4'},
   text: {fontSize: 14, padding: 5, color: '#fff', fontWeight: '200'},
-  semiBold: {fontSize: 16, padding: 2, fontWeight: '700', color: '#fff'},
+  semiBold: {fontSize: 20, padding: 2, fontWeight: '700', color: '#fff'},
   notification: {alignSelf: 'flex-end'},
   img: {
     width: 60,

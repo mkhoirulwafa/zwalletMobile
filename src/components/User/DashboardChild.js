@@ -132,6 +132,7 @@ const styles2 = StyleSheet.create({
   },
   btn: {
     flexDirection: 'row',
+    marginTop: 10,
     marginHorizontal: 10,
     flex: 0.5,
     paddingVertical: 8,
@@ -157,15 +158,17 @@ const styles2 = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
 
-    elevation: 7,
+    elevation: 4,
   },
   listText: {
+    marginLeft: 10,
     fontSize: 16,
     padding: 5,
     color: '#4D4B57',
     fontWeight: '700',
   },
   listDescript: {
+    marginLeft: 10,
     fontSize: 12,
     padding: 5,
     color: '#4D4B57',
