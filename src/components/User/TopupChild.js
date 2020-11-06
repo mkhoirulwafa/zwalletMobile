@@ -1,56 +1,24 @@
 import React from 'react';
 import {View, Text, StyleSheet, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {GetTopup} from './../../redux/actions/topup';
 
 const TopupChild = (props) => {
-  // const [loading, setLoading] = useState(false);
-
-  // const onSubmit = () => {
-  //   // setLoading(true);
-  //   setTimeout(() => {
-  //     ToastAndroid.show('Login Sukses, Selamat Datang', ToastAndroid.SHORT);
-  //     props.navigation.navigate('NewPassword');
-  //     // setLoading(false);
-  //   }, 3000);
-  // };
-  const topups = [
-    {
-      key: 1,
-      title: 'Go to the nearest ATM or you can use E-Banking.',
-    },
-    {
-      key: 2,
-      title: 'Type your security number on the ATM or E-Banking.',
-    },
-    {
-      key: 3,
-      title: 'Select “Transfer” in the menu',
-    },
-    {
-      key: 4,
-      title: 'Type the virtual account number that we provide you at the top.',
-    },
-    {
-      key: 5,
-      title: 'Type the amount of the money you want to top up.',
-    },
-    {
-      key: 6,
-      title: 'Read the summary details',
-    },
-    {
-      key: 7,
-      title: 'Press transfer / top up',
-    },
-    {
-      key: 8,
-      title: 'You can see your money in Zwallet within 3 hours.',
-    },
-  ];
+  const dispatch = useDispatch();
+  const AuthReducer = useSelector((s) => s.Auth);
+  const {data} = useSelector((s) => s.Topup);
+  React.useEffect(() => {
+    dispatch(
+      GetTopup({
+        token: AuthReducer.data.token,
+      }),
+    );
+  }, [dispatch, AuthReducer.data.token]);
   return (
     <>
       <FlatList
-        data={topups}
+        data={data}
         ListHeaderComponent={
           <View style={styles2.fullFlex}>
             <View style={styles2.flexFour}>
@@ -61,10 +29,10 @@ const TopupChild = (props) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item, index}) => {
           return (
-            <View style={styles2.listTopup} key={item.key}>
+            <View style={styles2.listTopup} key={item.number}>
               <View style={styles2.fullFlex}>
                 <View style={styles2.flexOne}>
-                  <Text style={styles2.numList}>{item.key}</Text>
+                  <Text style={styles2.numList}>{item.number}</Text>
                 </View>
                 <View style={styles2.flexFour}>
                   <Text style={styles2.listDescript}>{item.title}</Text>

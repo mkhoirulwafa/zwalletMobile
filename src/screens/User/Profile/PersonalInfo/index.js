@@ -9,36 +9,50 @@ import {
 } from 'react-native';
 import {FlatList, RectButton} from 'react-native-gesture-handler';
 import {IconButton} from 'react-native-paper';
-// import DashboardChild from './../../../components/User/DashboardChild';
-
-const detailInfo = [
-  {
-    key: 1,
-    title: 'First Name',
-    value: 'Muhammad',
-    trailing: false,
-  },
-  {
-    key: 1,
-    title: 'Last Name',
-    value: 'Khoirul Wafa',
-    trailing: false,
-  },
-  {
-    key: 1,
-    title: 'Verified E-mail',
-    value: 'muhkhwafa@gmail.com',
-    trailing: false,
-  },
-  {
-    key: 1,
-    title: 'Phone Number',
-    value: '+62 857-3168-1486',
-    trailing: true,
-  },
-];
+import {useDispatch, useSelector} from 'react-redux';
+import {GetUser} from './../../../../redux/actions/user';
 
 const Home = (props) => {
+  const dispatch = useDispatch();
+
+  const {data} = useSelector((s) => s.User);
+  const Auth = useSelector((s) => s.Auth);
+  React.useEffect(() => {
+    console.log(Auth.data.id);
+    dispatch(
+      GetUser({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      }),
+    );
+  }, [dispatch, Auth.data.id, Auth.data.token]);
+
+  const detailInfo = [
+    {
+      key: 1,
+      title: 'First Name',
+      value: data.firstName,
+      trailing: false,
+    },
+    {
+      key: 1,
+      title: 'Last Name',
+      value: data.lastName,
+      trailing: false,
+    },
+    {
+      key: 1,
+      title: 'Verified E-mail',
+      value: data.email,
+      trailing: false,
+    },
+    {
+      key: 1,
+      title: 'Phone Number',
+      value: `+${data.phone}`,
+      trailing: true,
+    },
+  ];
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#6379F4" />

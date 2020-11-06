@@ -1,31 +1,29 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, TextInput, ToastAndroid, StyleSheet} from 'react-native';
+import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import {Button, IconButton} from 'react-native-paper';
 import {styles} from '../styles';
-import AsyncStorage from '@react-native-community/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import {AuthLogin} from '../../redux/actions/auth';
 
 const LoginChild = (props) => {
   const inputPassword = useRef();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [hidePassword, setHidePassword] = useState(true);
   const [emailFocus, setEmailFocus] = useState(true);
   const [passwordFocus, setPasswordFocus] = useState(true);
-  let token = 'ijojadoqw0qjdadq0jwd';
+  const dispatch = useDispatch();
+  const {loading} = useSelector((s) => s.Auth);
 
   const onSubmit = () => {
-    setLoading(true);
-    AsyncStorage.setItem('token', token);
-    setTimeout(() => {
-      ToastAndroid.show(
-        `Login Sukses, Selamat Datang ${email}`,
-        ToastAndroid.SHORT,
-        props.navigation.navigate('Home'),
-      );
-      setLoading(false);
-    }, 3000);
+    console.log(email, password, 'dasd');
+    dispatch(
+      AuthLogin({
+        email: email,
+        password: password,
+      }),
+    );
   };
   return (
     <>

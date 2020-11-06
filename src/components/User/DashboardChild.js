@@ -2,56 +2,26 @@ import React from 'react';
 import {View, Text, StyleSheet, Image, Dimensions} from 'react-native';
 import {IconButton} from 'react-native-paper';
 import {FlatList, RectButton} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {GetHistory} from './../../redux/actions/transfer';
+import {formatNumber} from './../../helpers/index';
 
 const DashboardChild = (props) => {
-  // const [loading, setLoading] = useState(false);
-
-  // const onSubmit = () => {
-  //   // setLoading(true);
-  //   setTimeout(() => {
-  //     ToastAndroid.show('Login Sukses, Selamat Datang', ToastAndroid.SHORT);
-  //     props.navigation.navigate('NewPassword');
-  //     // setLoading(false);
-  //   }, 3000);
-  // };
-  const transactions = [
-    {
-      id: 1,
-      avatar:
-        'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/7.png?raw=true',
-      fullName: 'Robert Chandler',
-      type: 'Transfer',
-      amount: '50.000',
-    },
-    {
-      id: 2,
-      avatar:
-        'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/2.png?raw=true',
-      fullName: 'Samuel Suhi',
-      type: 'Transfer',
-      amount: '80.000',
-    },
-    {
-      id: 3,
-      avatar:
-        'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/3.png?raw=true',
-      fullName: 'Jessica Keen',
-      type: 'Transfer',
-      amount: '10.000',
-    },
-    {
-      id: 4,
-      avatar:
-        'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/5.png?raw=true',
-      fullName: 'Crazy Rich',
-      type: 'Transfer',
-      amount: '2.000.000',
-    },
-  ];
+  const dispatch = useDispatch();
+  const Auth = useSelector((s) => s.Auth);
+  const {data} = useSelector((s) => s.Transfer);
+  React.useEffect(() => {
+    dispatch(
+      GetHistory({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      }),
+    );
+  }, [dispatch, Auth.data.id, Auth.data.token]);
   return (
     <>
       <FlatList
-        data={transactions}
+        data={data}
         ListHeaderComponent={
           <>
             <View style={styles2.fullFlex}>
@@ -95,15 +65,38 @@ const DashboardChild = (props) => {
             <View style={styles2.listItem} key={item.id}>
               <View style={styles2.fullFlex}>
                 <View style={styles2.flexTwo}>
-                  <Image style={[styles2.img]} source={{uri: item.avatar}} />
+                  <Image
+                    style={[styles2.img]}
+                    source={{
+                      uri:
+                        item.sender_id === Auth.data.id
+                          ? item.receiver_avatar
+                          : item.sender_avatar,
+                    }}
+                  />
                 </View>
                 <View style={styles2.flexFour}>
-                  <Text style={styles2.listText}>{item.fullName}</Text>
+                  <Text style={styles2.listText}>
+                    {item.sender_id === Auth.data.id
+                      ? item.receiver_name
+                      : item.sender_name}
+                  </Text>
                   <Text style={styles2.listDescript}>{item.type}</Text>
                 </View>
-                <View style={styles2.amountList}>
-                  <Text style={styles2.amountList}>
-                    {(item.type === 'Transfer' ? '+Rp' : '-Rp') + item.amount}
+                <View
+                  style={
+                    item.sender_id === Auth.data.id
+                      ? styles2.amountListMinus
+                      : styles2.amountListPlus
+                  }>
+                  <Text
+                    style={
+                      item.sender_id === Auth.data.id
+                        ? styles2.amountListMinus
+                        : styles2.amountListPlus
+                    }>
+                    {(item.sender_id === Auth.data.id ? '-Rp' : '+Rp') +
+                      formatNumber(item.amount)}
                   </Text>
                 </View>
               </View>
@@ -174,8 +167,14 @@ const styles2 = StyleSheet.create({
     color: '#4D4B57',
     fontWeight: '300',
   },
-  amountList: {
+  amountListPlus: {
     color: '#1EC15F',
+    alignItems: 'center',
+    paddingVertical: 10,
+    marginRight: 5,
+  },
+  amountListMinus: {
+    color: '#FF5B37',
     alignItems: 'center',
     paddingVertical: 10,
     marginRight: 5,

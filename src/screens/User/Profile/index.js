@@ -12,7 +12,9 @@ import {IconButton, Switch} from 'react-native-paper';
 // import {styles} from '../styles';
 // import TopupChild from './../../../components/User/TopupChild';
 import {FlatList, RectButton} from 'react-native-gesture-handler';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {AuthLogout} from './../../../redux/actions/auth';
+import {GetUser} from './../../../redux/actions/user';
 const btnProfile = [
   {
     key: 1,
@@ -45,7 +47,7 @@ const btnProfile = [
   {
     key: 5,
     title: 'Logout',
-    onPress: 'Login',
+    onPress: '#',
     trailing: '',
     switch: false,
   },
@@ -53,8 +55,21 @@ const btnProfile = [
 
 const Profile = (props) => {
   const [isSwitchOn, setIsSwitchOn] = React.useState(true);
-  const onPressed = (to) => props.navigation.push(to);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+  const dispatch = useDispatch();
+
+  const {loading, data} = useSelector((s) => s.User);
+  const Auth = useSelector((s) => s.Auth);
+  React.useEffect(() => {
+    console.log(Auth.data.id);
+    dispatch(
+      GetUser({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      }),
+    );
+  }, [dispatch, Auth.data.id, Auth.data.token]);
+
   return (
     <>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
@@ -77,8 +92,9 @@ const Profile = (props) => {
                   <Image
                     style={styles2.img}
                     source={{
-                      uri:
-                        'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true',
+                      uri: loading
+                        ? 'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true'
+                        : data.avatar,
                     }}
                   />
                   <View style={[styles2.flexFive]}>
@@ -101,10 +117,10 @@ const Profile = (props) => {
                   </View>
                 </View>
                 <View>
-                  <Text style={styles2.listText}>Muhammad Khoirul Wafa</Text>
+                  <Text style={styles2.listText}>{Auth.data.fullName}</Text>
                 </View>
                 <View>
-                  <Text style={styles2.listDescript}>+62-857-3168-1486</Text>
+                  <Text style={styles2.listDescript}>+{data.phone}</Text>
                 </View>
               </View>
             </View>
@@ -117,7 +133,11 @@ const Profile = (props) => {
                   <View style={styles2.flexFour}>
                     <RectButton
                       rippleColor="transparent"
-                      onPress={() => onPressed(item.onPress, item.title)}>
+                      onPress={() =>
+                        item.title === 'Logout'
+                          ? dispatch(AuthLogout())
+                          : props.navigation.push(item.onPress)
+                      }>
                       <Text style={styles2.semiBold}>{item.title}</Text>
                     </RectButton>
                   </View>
@@ -189,6 +209,7 @@ const styles2 = StyleSheet.create({
     width: 70,
     height: 70,
     marginRight: 10,
+    borderRadius: 15,
   },
   btn: {
     flexDirection: 'row',

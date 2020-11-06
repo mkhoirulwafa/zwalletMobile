@@ -4,31 +4,18 @@ import {
   View,
   Text,
   StatusBar,
-  Image,
   StyleSheet,
   Dimensions,
+  TextInput,
 } from 'react-native';
-import {RectButton} from 'react-native-gesture-handler';
 import {IconButton} from 'react-native-paper';
-import DashboardChild from './../../../components/User/DashboardChild';
-import {useDispatch, useSelector} from 'react-redux';
-import {GetUser} from './../../../redux/actions/user';
-import {formatNumber} from './../../../helpers/index';
+// import {styles} from '../styles';
+// import TopupChild from './../../../components/User/TopupChild';
+import {RectButton} from 'react-native-gesture-handler';
 
-const Home = (props) => {
-  const dispatch = useDispatch();
-
-  const {loading, data} = useSelector((s) => s.User);
-  const Auth = useSelector((s) => s.Auth);
-  React.useEffect(() => {
-    console.log(Auth.data.id);
-    dispatch(
-      GetUser({
-        id: Auth.data.id,
-        token: Auth.data.token,
-      }),
-    );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
+const Topup = (props) => {
+  const [key, setKey] = React.useState(null);
+  const [keyFocus, setKeyFocus] = React.useState(true);
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#6379F4" />
@@ -36,32 +23,32 @@ const Home = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <RectButton onPress={() => props.navigation.navigate('Profile')}>
-                <Image
-                  style={styles2.img}
-                  source={{
-                    uri: loading
-                      ? 'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true'
-                      : data.avatar,
-                  }}
-                />
+              <RectButton onPress={() => props.navigation.goBack()}>
+                <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>
             <View style={styles2.flexFour}>
-              <Text style={styles2.text}>Balance</Text>
-              <Text style={styles2.semiBold}>
-                Rp
-                {data.balance !== '0' || data.balance !== ''
-                  ? formatNumber(data.balance)
-                  : '0,-'}
-              </Text>
+              <Text style={styles2.semiBold}>Find Receiver</Text>
             </View>
-            <View>
-              <IconButton icon="bell-outline" color="#fff" />
+          </View>
+          <View style={styles2.listItem} key={2}>
+            <View style={styles2.fullFlex}>
+              <TextInput
+                icon="magnify"
+                onFocus={() => setKeyFocus(!keyFocus)}
+                onBlur={() => setKeyFocus(!keyFocus)}
+                inlineImagePadding={40}
+                placeholder="Search receiver here"
+                autoCapitalize={'none'}
+                value={key}
+                onChangeText={(e) => setKey(e)}
+                // onSubmitEditing={() => inputPassword.current.focus()}
+                returnKeyType="next"
+              />
             </View>
           </View>
         </View>
-        <DashboardChild {...props} />
+        {/* <TopupChild /> */}
       </SafeAreaView>
     </>
   );
@@ -75,12 +62,12 @@ const styles2 = StyleSheet.create({
   fullFlex: {
     flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    padding: 5,
     width: Dimensions.get('screen').width,
-    marginTop: 10,
+    marginTop: 5,
   },
   wrapperTop: {
-    height: 100,
+    height: 160,
     backgroundColor: '#6379F4',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
@@ -97,23 +84,28 @@ const styles2 = StyleSheet.create({
   flexFive: {flex: 0.5},
   flexFour: {flex: 0.8, marginLeft: 10, paddingRight: 10},
   flexTwo: {flex: 0.2},
+  flexOne: {flex: 0.1},
   white: {color: '#fff'},
   topMargin: {marginTop: 10},
   primaryColor: {color: '#6379F4'},
   text: {fontSize: 14, padding: 5, color: '#fff', fontWeight: '200'},
-  semiBold: {fontSize: 20, padding: 2, fontWeight: '700', color: '#fff'},
+  semiBold: {
+    fontSize: 16,
+    marginVertical: 10,
+    fontWeight: '700',
+    color: '#fff',
+  },
   notification: {alignSelf: 'flex-end'},
   img: {
     width: 60,
     height: 60,
     marginRight: 10,
-    borderRadius: 15,
   },
   btn: {
     flexDirection: 'row',
     marginHorizontal: 10,
     flex: 0.5,
-    paddingVertical: 8,
+    paddingVertical: 10,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -124,8 +116,8 @@ const styles2 = StyleSheet.create({
     marginRight: 5,
   },
   listItem: {
-    marginTop: 20,
-    height: 100,
+    height: 60,
+    margin: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
@@ -147,14 +139,8 @@ const styles2 = StyleSheet.create({
   listDescript: {
     fontSize: 12,
     padding: 5,
-    color: '#4D4B57',
+    color: '#7A7886',
     fontWeight: '300',
   },
-  amountList: {
-    color: '#1EC15F',
-    alignItems: 'center',
-    paddingVertical: 10,
-    marginRight: 5,
-  },
 });
-export default Home;
+export default Topup;
