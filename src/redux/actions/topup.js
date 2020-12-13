@@ -30,13 +30,10 @@ export const GetTopup = (fields) => {
     })
       .then((res) => {
         const data = res.data.data;
-        dispatch(TopupSuccess(data));
-        console.log(
-          `${res.data.data} , ini di fetch Topup yaaaaaa butuh token:(`,
-        );
+        return dispatch(TopupSuccess(data));
       })
       .catch((err) => {
-        dispatch(TopupError(err.message));
+        return dispatch(TopupError(err.response.data.message));
       });
   };
 };

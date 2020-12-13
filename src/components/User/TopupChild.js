@@ -15,6 +15,20 @@ const TopupChild = (props) => {
       }),
     );
   }, [dispatch, AuthReducer.data.token]);
+  const RenderItems = ({item, index}) => {
+    return (
+      <View style={styles2.listTopup} key={item.number}>
+        <View style={styles2.fullFlex}>
+          <View style={styles2.flexOne}>
+            <Text style={styles2.numList}>{item.number}</Text>
+          </View>
+          <View style={styles2.flexFour}>
+            <Text style={styles2.listDescript}>{item.title}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
   return (
     <>
       <FlatList
@@ -27,20 +41,7 @@ const TopupChild = (props) => {
           </View>
         }
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
-          return (
-            <View style={styles2.listTopup} key={item.number}>
-              <View style={styles2.fullFlex}>
-                <View style={styles2.flexOne}>
-                  <Text style={styles2.numList}>{item.number}</Text>
-                </View>
-                <View style={styles2.flexFour}>
-                  <Text style={styles2.listDescript}>{item.title}</Text>
-                </View>
-              </View>
-            </View>
-          );
-        }}
+        renderItem={RenderItems}
       />
     </>
   );

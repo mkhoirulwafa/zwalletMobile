@@ -25,6 +25,18 @@ const Auth = (state = initialState, action = {}) => {
         data: [],
         _persist: {rehydrate: true, version: -1},
       };
+    case 'REGISTER_REQUEST':
+      return {...state, loading: true};
+    case 'REGISTER_SUCCESS':
+      return {...state, loading: false, isLogin: false, data: action.payload};
+    case 'REGISTER_ERROR':
+      return {
+        ...state,
+        loading: false,
+        isLogin: true,
+        data: [],
+        error: action.payload,
+      };
 
     default:
       return state;

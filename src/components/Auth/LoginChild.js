@@ -13,17 +13,28 @@ const LoginChild = (props) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [emailFocus, setEmailFocus] = useState(true);
   const [passwordFocus, setPasswordFocus] = useState(true);
+  const [showErr, setShowErr] = useState(false);
   const dispatch = useDispatch();
-  const {loading} = useSelector((s) => s.Auth);
+  let [loading, setLoading] = useState(false);
+  let {error, data} = useSelector((s) => s.Auth);
 
   const onSubmit = () => {
-    console.log(email, password, 'dasd');
+    setLoading(true);
     dispatch(
       AuthLogin({
         email: email,
         password: password,
       }),
     );
+    setTimeout(() => {
+      setLoading(false);
+      if (!data.length) {
+        setShowErr(true);
+        setTimeout(() => {
+          setShowErr(false);
+        }, 2000);
+      }
+    }, 1000);
   };
   return (
     <>
@@ -89,6 +100,7 @@ const LoginChild = (props) => {
                 </View>
               </RectButton>
             </View>
+            {showErr ? <Text style={styles2.err}>{error}</Text> : <View />}
             <Button
               uppercase={false}
               mode="contained"
@@ -123,6 +135,10 @@ const styles2 = StyleSheet.create({
   flexOne: {flex: 0.1},
   white: {color: '#fff'},
   primaryColor: {color: '#6379F4'},
+  err: {
+    color: '#FF5B37',
+    textAlign: 'center',
+  },
 });
 
 export default LoginChild;

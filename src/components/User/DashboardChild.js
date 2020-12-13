@@ -4,20 +4,87 @@ import {IconButton} from 'react-native-paper';
 import {FlatList, RectButton} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {GetHistory} from './../../redux/actions/transfer';
-import {formatNumber} from './../../helpers/index';
+// import {styles} from '../styles';
+import NumberFormat from 'react-number-format';
 
 const DashboardChild = (props) => {
   const dispatch = useDispatch();
   const Auth = useSelector((s) => s.Auth);
+  const [limit, setLimit] = React.useState(5);
   const {data} = useSelector((s) => s.Transfer);
   React.useEffect(() => {
+    const handleRefresh = () => {
+      dispatch(
+        GetHistory({
+          id: Auth.data.id,
+          limit: limit,
+          token: Auth.data.token,
+        }),
+      );
+    };
     dispatch(
       GetHistory({
         id: Auth.data.id,
+        limit: limit,
         token: Auth.data.token,
       }),
     );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
+    props.navigation.addListener('focus', () => handleRefresh());
+  }, [dispatch, Auth.data.id, Auth.data.token, limit, props.navigation]);
+  const renderItems = ({item, index}) => {
+    return (
+      <>
+        <View style={styles2.listItem} key={item.id}>
+          <View style={styles2.fullFlex}>
+            <View style={styles2.flexTwo}>
+              <Image
+                style={[styles2.img]}
+                source={{
+                  uri:
+                    item.sender_id === Auth.data.id
+                      ? item.receiver_avatar
+                      : item.sender_avatar,
+                }}
+              />
+            </View>
+            <View style={styles2.flexFour}>
+              <Text style={styles2.listText}>
+                {item.sender_id === Auth.data.id
+                  ? item.receiver_name
+                  : item.sender_name}
+              </Text>
+              <Text style={styles2.listDescript}>{item.type}</Text>
+            </View>
+            <View
+              style={
+                item.sender_id === Auth.data.id
+                  ? styles2.amountListMinus
+                  : styles2.amountListPlus
+              }>
+              <NumberFormat
+                value={item.amount}
+                displayType={'text'}
+                thousandSeparator={'.'}
+                decimalSeparator={','}
+                renderText={(value) => (
+                  <Text
+                    style={
+                      item.sender_id === Auth.data.id
+                        ? styles2.amountListMinus
+                        : styles2.amountListPlus
+                    }>
+                    {item.sender_id === Auth.data.id
+                      ? `-Rp${value}`
+                      : `+Rp${value}`}
+                  </Text>
+                )}
+              />
+            </View>
+          </View>
+        </View>
+      </>
+    );
+  };
   return (
     <>
       <FlatList
@@ -28,6 +95,7 @@ const DashboardChild = (props) => {
               <RectButton
                 style={styles2.btn}
                 backgroundColor="#E5E8ED"
+                onPress={() => props.navigation.push('Transfer')}
                 uppercase={false}>
                 <IconButton icon="arrow-up" color="#6379F4" />
                 <View>
@@ -38,7 +106,7 @@ const DashboardChild = (props) => {
                 style={styles2.btn}
                 backgroundColor="#E5E8ED"
                 uppercase={false}
-                onPress={() => props.navigation.navigate('Topup')}>
+                onPress={() => props.navigation.push('Topup')}>
                 <IconButton icon="plus" color="#6379F4" />
                 <View>
                   <Text style={styles2.labelBtn}>Topup</Text>
@@ -50,7 +118,9 @@ const DashboardChild = (props) => {
                 <Text style={styles2.labelBtn}>Transaction History</Text>
               </View>
               <View style={styles2.flexTwo}>
-                <RectButton alignSelf="center">
+                <RectButton
+                  alignSelf="center"
+                  onPress={() => props.navigation.push('TransactionHistory')}>
                   <View>
                     <Text style={styles2.primaryColor}>See all</Text>
                   </View>
@@ -60,49 +130,18 @@ const DashboardChild = (props) => {
           </>
         }
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item, index}) => {
-          return (
-            <View style={styles2.listItem} key={item.id}>
-              <View style={styles2.fullFlex}>
-                <View style={styles2.flexTwo}>
-                  <Image
-                    style={[styles2.img]}
-                    source={{
-                      uri:
-                        item.sender_id === Auth.data.id
-                          ? item.receiver_avatar
-                          : item.sender_avatar,
-                    }}
-                  />
-                </View>
-                <View style={styles2.flexFour}>
-                  <Text style={styles2.listText}>
-                    {item.sender_id === Auth.data.id
-                      ? item.receiver_name
-                      : item.sender_name}
-                  </Text>
-                  <Text style={styles2.listDescript}>{item.type}</Text>
-                </View>
-                <View
-                  style={
-                    item.sender_id === Auth.data.id
-                      ? styles2.amountListMinus
-                      : styles2.amountListPlus
-                  }>
-                  <Text
-                    style={
-                      item.sender_id === Auth.data.id
-                        ? styles2.amountListMinus
-                        : styles2.amountListPlus
-                    }>
-                    {(item.sender_id === Auth.data.id ? '-Rp' : '+Rp') +
-                      formatNumber(item.amount)}
-                  </Text>
-                </View>
+        renderItem={renderItems}
+        ListFooterComponent={
+          <View style={styles2.flexFour}>
+            <RectButton
+              alignSelf="center"
+              onPress={() => props.navigation.push('TransactionDetails')}>
+              <View>
+                <Text style={styles2.primaryColor}>See More</Text>
               </View>
-            </View>
-          );
-        }}
+            </RectButton>
+          </View>
+        }
       />
     </>
   );
@@ -122,6 +161,7 @@ const styles2 = StyleSheet.create({
     width: 60,
     height: 60,
     marginRight: 10,
+    borderRadius: 15,
   },
   btn: {
     flexDirection: 'row',

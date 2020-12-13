@@ -25,7 +25,9 @@ const PinCreatedChild = (props) => {
             <View>
               <Image
                 style={styles2.img}
-                source={require('C:/Users/Waferchoc/Desktop/ARKADEMY/week9/zwallet/android/app/src/main/res/drawable/success.png')}
+                source={
+                  'https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/success.png?raw=true'
+                }
               />
             </View>
             <View>

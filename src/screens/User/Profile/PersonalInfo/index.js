@@ -11,8 +11,9 @@ import {FlatList, RectButton} from 'react-native-gesture-handler';
 import {IconButton} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 import {GetUser} from './../../../../redux/actions/user';
+import NumberFormat from 'react-number-format';
 
-const Home = (props) => {
+const PersonalInfo = (props) => {
   const dispatch = useDispatch();
 
   const {data} = useSelector((s) => s.User);
@@ -49,7 +50,7 @@ const Home = (props) => {
     {
       key: 1,
       title: 'Phone Number',
-      value: `+${data.phone}`,
+      value: data.phone,
       trailing: true,
     },
   ];
@@ -89,7 +90,19 @@ const Home = (props) => {
                 <View style={styles2.fullFlex}>
                   <View style={styles2.flexFour}>
                     <Text style={styles2.listTitle}>{item.title}</Text>
-                    <Text style={styles2.listText}>{item.value}</Text>
+                    {item.title === 'Phone Number' ? (
+                      <NumberFormat
+                        value={item.value}
+                        displayType={'text'}
+                        format="+## ###-####-####"
+                        mask="_"
+                        renderText={(value) => (
+                          <Text style={styles2.listText}>{value}</Text>
+                        )}
+                      />
+                    ) : (
+                      <Text style={styles2.listText}>{item.value}</Text>
+                    )}
                   </View>
                   <View style={styles2.flexTwo}>
                     {item.trailing ? (
@@ -232,4 +245,4 @@ const styles2 = StyleSheet.create({
     fontSize: 14,
   },
 });
-export default Home;
+export default PersonalInfo;

@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     marginTop: 15,
   },
   child: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FAFCFF',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     padding: 20,

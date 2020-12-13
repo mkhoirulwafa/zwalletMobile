@@ -1,21 +1,21 @@
 import React, {useState} from 'react';
 import {View, Text, TextInput, ToastAndroid, StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 import {styles} from '../styles';
 
 const ResetChild = (props) => {
   const [email, setEmail] = useState(null);
   const [loading, setLoading] = useState(false);
   const [emailFocus, setEmailFocus] = useState(true);
+  const dispatch = useDispatch();
 
   const onSubmit = () => {
     setLoading(true);
     setTimeout(() => {
-      ToastAndroid.show(
-        `Login Sukses, Selamat Datang ${email}`,
-        ToastAndroid.SHORT,
-      );
-      props.navigation.navigate('NewPassword');
+      ToastAndroid.show('Please enter your new password', ToastAndroid.SHORT);
+      dispatch(ResetPassword);
+      props.navigation.navigate('NewPassword', {email: email});
       setLoading(false);
     }, 3000);
   };

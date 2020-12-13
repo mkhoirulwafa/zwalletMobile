@@ -6,7 +6,7 @@ import {styles} from '../styles';
 const Auth = (props) => {
   return (
     <>
-      <StatusBar barStyle="dark-content" color="#514F5B" />
+      <StatusBar barStyle="dark-content" color="#ffffff" />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"

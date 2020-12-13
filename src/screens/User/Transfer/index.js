@@ -7,15 +7,55 @@ import {
   StyleSheet,
   Dimensions,
   TextInput,
+  Image,
+  Keyboard,
 } from 'react-native';
 import {IconButton} from 'react-native-paper';
 // import {styles} from '../styles';
-// import TopupChild from './../../../components/User/TopupChild';
-import {RectButton} from 'react-native-gesture-handler';
+// import TransferChild from './../../../components/User/TransferChild';
+import {FlatList, RectButton} from 'react-native-gesture-handler';
+import {useDispatch, useSelector} from 'react-redux';
+import {SearchUser, SearchAllUser} from '../../../redux/actions/user';
+import NumberFormat from 'react-number-format';
 
-const Topup = (props) => {
+const Transfer = (props) => {
   const [key, setKey] = React.useState(null);
-  const [keyFocus, setKeyFocus] = React.useState(true);
+  const [limit, setLimit] = React.useState(5);
+  const dispatch = useDispatch();
+
+  const {data} = useSelector((s) => s.SearchUser);
+  const Auth = useSelector((s) => s.Auth);
+
+  // const handleChange = (e) ={
+  //   setKey(e),
+  //   console.log(key)
+  //   // dispatch(
+  //   //   SearchUser({
+  //   //     key: key,
+  //   //     token: Auth.data.token,
+  //   //   })
+  //   // );
+  // }
+  React.useEffect(() => {
+    if (key !== null && key !== '') {
+      // Keyboard.dismiss();
+      dispatch(
+        SearchUser({
+          key: key,
+          limit: limit,
+          token: Auth.data.token,
+        }),
+      );
+    } else {
+      dispatch(
+        SearchAllUser({
+          limit: limit,
+          token: Auth.data.token,
+        }),
+      );
+    }
+  }, [dispatch, limit, key, Auth.data.token]);
+
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="#6379F4" />
@@ -23,7 +63,9 @@ const Topup = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <RectButton onPress={() => props.navigation.goBack()}>
+              <RectButton
+                rippleColor="transparent"
+                onPress={() => props.navigation.goBack()}>
                 <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>
@@ -32,11 +74,9 @@ const Topup = (props) => {
             </View>
           </View>
           <View style={styles2.listItem} key={2}>
-            <View style={styles2.fullFlex}>
+            <View style={styles2.search}>
               <TextInput
-                icon="magnify"
-                onFocus={() => setKeyFocus(!keyFocus)}
-                onBlur={() => setKeyFocus(!keyFocus)}
+                inlineImageLeft={'search'}
                 inlineImagePadding={40}
                 placeholder="Search receiver here"
                 autoCapitalize={'none'}
@@ -48,7 +88,76 @@ const Topup = (props) => {
             </View>
           </View>
         </View>
-        {/* <TopupChild /> */}
+        <FlatList
+          data={data}
+          ListHeaderComponent={
+            <>
+              <View style={styles2.fullFlex}>
+                <View style={styles2.flexFour}>
+                  <Text style={styles2.labelBtn}>Contacts</Text>
+                  <Text style={styles2.listDescript}>
+                    {data.length} Contact Found
+                  </Text>
+                </View>
+              </View>
+            </>
+          }
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item, index}) => {
+            // console.log(data.length, 'ioefjofj');
+            return (
+              <>
+                <RectButton
+                  rippleColor="transparent"
+                  onPress={() =>
+                    props.navigation.navigate('InputAmount', {
+                      id: item.id,
+                      avatar: item.avatar,
+                      fullName: item.fullName,
+                      phone: item.phone,
+                    })
+                  }>
+                  <View style={styles2.listSearch} key={item.id}>
+                    <View style={styles2.fullFlex}>
+                      <View style={styles2.flexTwo}>
+                        <Image
+                          style={[styles2.img]}
+                          source={{
+                            uri: item.avatar,
+                          }}
+                        />
+                      </View>
+                      <View style={styles2.flexFour}>
+                        <Text style={styles2.listText}>{item.fullName}</Text>
+                        <NumberFormat
+                          value={item.phone}
+                          displayType={'text'}
+                          format="+## ###-####-####"
+                          renderText={(value) => (
+                            <Text style={styles2.listDescript}>{value}</Text>
+                          )}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </RectButton>
+              </>
+            );
+          }}
+          ListFooterComponent={
+            <>
+              <View style={styles2.flexFour}>
+                <RectButton
+                  alignSelf="center"
+                  onPress={() => setLimit(limit + 3)}>
+                  <View>
+                    <Text style={styles2.primaryColor}>See More</Text>
+                  </View>
+                </RectButton>
+              </View>
+            </>
+          }
+        />
       </SafeAreaView>
     </>
   );
@@ -62,6 +171,13 @@ const styles2 = StyleSheet.create({
   fullFlex: {
     flex: 1,
     flexDirection: 'row',
+    padding: 5,
+    width: Dimensions.get('screen').width,
+    marginTop: 5,
+  },
+  search: {
+    flex: 1,
+    // flexDirection: 'row',
     padding: 5,
     width: Dimensions.get('screen').width,
     marginTop: 5,
@@ -130,6 +246,22 @@ const styles2 = StyleSheet.create({
 
     elevation: 7,
   },
+  listSearch: {
+    height: 80,
+    // marginVertical: 7,
+    marginBottom: 15,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+
+    elevation: 7,
+  },
   listText: {
     fontSize: 16,
     padding: 5,
@@ -143,4 +275,4 @@ const styles2 = StyleSheet.create({
     fontWeight: '300',
   },
 });
-export default Topup;
+export default Transfer;

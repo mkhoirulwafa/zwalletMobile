@@ -13,7 +13,43 @@ const User = (state = initialState, action = {}) => {
       return {
         ...state,
         loading: false,
-        isLogin: false,
+        isLogin: true,
+        data: [],
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const SearchUser = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case 'USERS_SEARCH_REQUEST':
+      return {...state, loading: true};
+    case 'USERS_SEARCH_SUCCESS':
+      return {...state, loading: false, isLogin: true, data: action.payload};
+    case 'USERS_SEARCH_ERROR':
+      return {
+        ...state,
+        loading: false,
+        isLogin: true,
+        data: [],
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const UserToTransfer = (state = initialState, action = {}) => {
+  switch (action.type) {
+    case 'NEW_USERS_REQUEST':
+      return {...state, loading: true};
+    case 'NEW_USERS_SUCCESS':
+      return {...state, loading: false, isLogin: true, data: action.payload};
+    case 'NEW_USERS_ERROR':
+      return {
+        ...state,
+        loading: false,
+        isLogin: true,
         data: [],
         error: action.payload,
       };
@@ -59,4 +95,4 @@ const deleteUser = (state = initialState, action = {}) => {
   }
 };
 
-export {User, updateUser, deleteUser};
+export {User, SearchUser, updateUser, deleteUser, UserToTransfer};

@@ -1,96 +1,59 @@
-import React, {useRef, useState} from 'react';
-import {View, Text, ToastAndroid, StyleSheet, TextInput} from 'react-native';
+import React, {useRef, useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ToastAndroid,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+} from 'react-native';
 import {Button} from 'react-native-paper';
 import {styles} from '../styles';
 // import InputPin from './../../helpers/Pin';
+import {useDispatch, useSelector} from 'react-redux';
+import {GetUser, UpdateUser} from './../../redux/actions/user';
+import InputPin from '../User/InputPin';
 
-const CreatePinChild = (props) => {
+const CreatePin = (props) => {
+  const [showErr, setShowErr] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [pinVal, setPinVal] = useState();
-  const [pinVal2, setPinVal2] = useState();
-  const [pinVal3, setPinVal3] = useState();
-  const [pinVal4, setPinVal4] = useState();
-  const [pinVal5, setPinVal5] = useState();
-  const [pinVal6, setPinVal6] = useState();
-  const pin = useRef();
-  const pin2 = useRef();
-  const pin3 = useRef();
-  const pin4 = useRef();
-  const pin5 = useRef();
-  const pin6 = useRef();
+  const [pin, setPin] = useState('');
 
-  const handleChange = (e, num) => {
-    if (num === 1) {
-      setPinVal(e);
-      if (pinVal === '') {
-        pin2.current.focus();
-      }
-    } else if (num === 2) {
-      setPinVal2(e);
-      if (pinVal2 === '') {
-        pin3.current.focus();
-      }
-    } else if (num === 3) {
-      setPinVal3(e);
-      if (pinVal3 === '') {
-        pin4.current.focus();
-      }
-    } else if (num === 4) {
-      setPinVal4(e);
-      if (pinVal4 === '') {
-        pin5.current.focus();
-      }
-    } else if (num === 5) {
-      setPinVal5(e);
-      if (pinVal5 === '') {
-        pin6.current.focus();
-      }
-    } else if (num === 6) {
-      setPinVal6(e);
-    }
-  };
-  const handleBackspace = (e, num) => {
-    console.log(e);
-    if (e === 'Backspace') {
-      if (num === 1) {
-        setPinVal('');
-      } else if (num === 2) {
-        setPinVal2('');
-        pin.current.focus();
-      } else if (num === 3) {
-        setPinVal3('');
-        pin2.current.focus();
-      } else if (num === 4) {
-        setPinVal4('');
-        pin3.current.focus();
-      } else if (num === 5) {
-        setPinVal5('');
-        pin4.current.focus();
-      } else if (num === 6) {
-        setPinVal6('');
-        pin5.current.focus();
-      }
-    }
-  };
+  const location = props.route.name;
+
+  const Auth = useSelector((s) => s.Auth);
+  const {data} = useSelector((s) => s.User);
+  const dispatch = useDispatch();
+
   const onSubmit = () => {
     setLoading(true);
+    dispatch(
+      UpdateUser({
+        data: {
+          pin: pin,
+        },
+        token: Auth.data.token,
+      }),
+    );
     setTimeout(() => {
-      ToastAndroid.show(
-        `Login Sukses, Selamat Datang ${pinVal}`,
-        ToastAndroid.SHORT,
-      );
-      props.navigation.navigate('PinCreated');
+      ToastAndroid.show('Pin Created Successfully', ToastAndroid.CENTER);
       setLoading(false);
-    }, 3000);
+      props.navigation.navigate('PinCreated');
+    }, 2000);
   };
-  //   useEffect(()=>{
-
-  //   })
+  useEffect(() => {
+    dispatch(
+      GetUser({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      }),
+    );
+  }, [dispatch, Auth.data.id, Auth.data.token, location]);
   return (
     <>
-      <View style={styles.child}>
+      <View style={styles2.child}>
         <View style={styles.wrapContent}>
-          <View>
+          <View style={styles2.wrapperRow}>
             <View>
               <Text style={styles.childTitle}>Create Security PIN</Text>
               <Text style={styles.descript}>
@@ -99,61 +62,13 @@ const CreatePinChild = (props) => {
               </Text>
             </View>
             <View style={styles2.wrap}>
-              <TextInput
-                onChangeText={(e) => handleChange(e, 1)}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                ref={pin}
-                value={pinVal}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 1)}
-              />
-              <TextInput
-                ref={pin2}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                onChangeText={(e) => handleChange(e, 2)}
-                value={pinVal2}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 2)}
-              />
-              <TextInput
-                ref={pin3}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                onChangeText={(e) => handleChange(e, 3)}
-                value={pinVal3}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 3)}
-              />
-              <TextInput
-                ref={pin4}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                onChangeText={(e) => handleChange(e, 4)}
-                value={pinVal4}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 4)}
-              />
-              <TextInput
-                ref={pin5}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                onChangeText={(e) => handleChange(e, 5)}
-                value={pinVal5}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 5)}
-              />
-              <TextInput
-                ref={pin6}
-                style={styles2.pin}
-                keyboardType="number-pad"
-                maxLength={1}
-                onChangeText={(e) => handleChange(e, 6)}
-                value={pinVal6}
-                onChange={(e) => handleBackspace(e.nativeEvent.text, 6)}
-              />
+              <InputPin length={6} onChangeText={(text) => setPin(text)} />
             </View>
+            {showErr ? (
+              <Text style={styles2.err}>Invalid Current PIN</Text>
+            ) : (
+              <View />
+            )}
             <Button
               uppercase={false}
               mode="contained"
@@ -177,6 +92,21 @@ const styles2 = StyleSheet.create({
   white: {color: '#fff'},
   primaryColor: {color: '#6379F4'},
   wrap: {flexDirection: 'row', padding: 4},
+  child: {
+    backgroundColor: '#FAFCFF',
+    padding: 20,
+    minHeight:
+      Dimensions.get('screen').height - (Dimensions.get('screen').height - 670),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 11,
+    },
+    shadowOpacity: 0.55,
+    shadowRadius: 16.0,
+
+    elevation: 40,
+  },
   pin: {
     borderWidth: 1,
     borderColor: '#a9a9a9',
@@ -187,6 +117,18 @@ const styles2 = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'NunitoSans-Bold',
   },
+  wrapperRow: {
+    flex: 1,
+  },
+  topMargin: {
+    position: 'absolute',
+    bottom: 0,
+    width: Dimensions.get('screen').width - 40,
+  },
+  err: {
+    color: '#FF5B37',
+    textAlign: 'center',
+  },
 });
 
-export default CreatePinChild;
+export default CreatePin;

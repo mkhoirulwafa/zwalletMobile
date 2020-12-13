@@ -17,6 +17,40 @@ const UsersError = (error) => {
     payload: error,
   };
 };
+const UsersSearchRequest = () => {
+  return {
+    type: 'USERS_SEARCH_REQUEST',
+  };
+};
+const UsersSearchSuccess = (data) => {
+  return {
+    type: 'USERS_SEARCH_SUCCESS',
+    payload: data,
+  };
+};
+const UsersSearchError = (error) => {
+  return {
+    type: 'USERS_SEARCH_ERROR',
+    payload: error,
+  };
+};
+const NewUsersRequest = () => {
+  return {
+    type: 'NEW_USERS_REQUEST',
+  };
+};
+const NewUsersSuccess = (data) => {
+  return {
+    type: 'NEW_USERS_SUCCESS',
+    payload: data,
+  };
+};
+const NewUsersError = (error) => {
+  return {
+    type: 'NEW_USERS_ERROR',
+    payload: error,
+  };
+};
 
 // const UpdateUserRequest = () => {
 //   return {
@@ -71,7 +105,7 @@ const DeleteUserError = (error) => {
   };
 };
 
-//action Get User By ID
+//action Get Search
 export const GetUser = (fields) => {
   return (dispatch) => {
     dispatch(UsersRequest());
@@ -84,77 +118,107 @@ export const GetUser = (fields) => {
     })
       .then((res) => {
         const data = res.data.data;
-        dispatch(UsersSuccess(data));
-        console.log(
-          `${res.data.data} , ini di fetch Topup yaaaaaa butuh token:(`,
-        );
+        return dispatch(UsersSuccess(data));
       })
       .catch((err) => {
-        dispatch(UsersError(err.message));
+        return dispatch(UsersError(err.response.data.message));
       });
   };
 };
-// Update User
+export const GetUserToTransfer = (fields) => {
+  return (dispatch) => {
+    dispatch(NewUsersRequest());
+    return Axios({
+      method: 'get',
+      url: `/users/${fields.id}`,
+      headers: {
+        token: `Bearer ${fields.token}`,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(NewUsersSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(NewUsersError(err.response.data.message));
+      });
+  };
+};
+export const SearchAllUser = (fields) => {
+  return (dispatch) => {
+    dispatch(UsersSearchRequest());
+    return Axios({
+      method: 'get',
+      url: `/users/search?limit=${fields.limit}`,
+      headers: {
+        token: `Bearer ${fields.token}`,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(UsersSearchSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(UsersSearchError(err.response.data.message));
+      });
+  };
+};
+export const SearchUser = (fields) => {
+  return (dispatch) => {
+    dispatch(UsersSearchRequest());
+    return Axios({
+      method: 'get',
+      url: `/users/search?name=${fields.key}&limit=${fields.limit}`,
+      headers: {
+        token: `Bearer ${fields.token}`,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(UsersSearchSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(UsersSearchError(err.response.data.message));
+      });
+  };
+};
 
-// export const updateUsers = (fields) => {
-//   return (dispatch) => {
-//     dispatch(UpdateUserRequest());
-//     const data = fields.data;
-//     return Axios({
-//       method: 'post',
-//       url: `http://localhost:8000/api/v1/users/avatar/${fields.id}`,
-//       data: data,
-//       headers: {
-//         token: `Bearer ${fields.token}`,
-//         'content-type': 'multipart/form-data',
-//       },
-//     })
-//       .then((res) => {
-//         let urlImage = res.data.image;
-//         Axios({
-//           method: 'patch',
-//           url: `http://localhost:8000/api/v1/users/${fields.id}`,
-//           data: {...fields.data, avatar: urlImage},
-//           headers: {
-//             token: `Bearer ${fields.token}`,
-//           },
-//         });
-//       })
-//       .then((res) => {
-//         const data = res.data.data;
-//         dispatch(UpdateUserSuccess(data));
-//         console.log(`${res.data.data} , update Users`);
-//         fields.history.push('/profile');
-//       })
-//       .catch((err) => {
-//         dispatch(UpdateUserError(err.message));
-//       });
-//   };
-// };
-// export const uploadAvatar = (fields) => {
-//   return (dispatch) => {
-//     dispatch(UploadRequest());
-//     const data = fields.data;
-//     return Axios({
-//       method: 'patch',
-//       url: `http://localhost:8000/api/v1/users/avatar/${fields.id}`,
-//       data: data,
-//       headers: {
-//         token: `Bearer ${fields.token}`,
-//         'content-type': 'multipart/form-data',
-//       },
-//     })
-//       .then((res) => {
-//         const data = res.data.data;
-//         dispatch(UploadSuccess(data));
-//         console.log(`${res.data.data} , update Users`);
-//         fields.history.push('/profile');
-//       })
-//       .catch((err) => {
-//         dispatch(UploadError(err.message));
-//       });
-//   };
-// };
+export const UpdateUser = (fields) => {
+  return (dispatch) => {
+    dispatch(UsersRequest());
+    return Axios.patch('/users', fields.data, {
+      headers: {
+        token: `Bearer ${fields.token}`,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(UsersSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(UsersError(err.response.data.message));
+      });
+  };
+};
+export const editPhoto = (fields) => {
+  return (dispatch) => {
+    dispatch(UsersRequest());
+    return Axios.patch('/users', fields.data, {
+      headers: {
+        token: `Bearer ${fields.token}`,
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(UsersSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(UsersError(err.response.data.message));
+      });
+  };
+};
 // delete
 export const DeleteUsers = (fields) => {
   return (dispatch) => {
@@ -168,11 +232,29 @@ export const DeleteUsers = (fields) => {
     })
       .then((res) => {
         const data = res.data.data;
-        dispatch(DeleteUserSuccess(data));
-        console.log(`${res.data.data} , Delete User`);
+        return dispatch(DeleteUserSuccess(data));
       })
       .catch((err) => {
-        dispatch(DeleteUserError(err.message));
+        return dispatch(DeleteUserError(err.response.data.message));
+      });
+  };
+};
+export const DeleteUsersDeviceToken = (fields) => {
+  return (dispatch) => {
+    dispatch(DeleteUserRequest());
+    return Axios({
+      method: 'patch',
+      url: `/users/devicetoken/${fields.id}`,
+      headers: {
+        token: fields.token,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        return dispatch(DeleteUserSuccess(data));
+      })
+      .catch((err) => {
+        return dispatch(DeleteUserError(err.response.data.message));
       });
   };
 };

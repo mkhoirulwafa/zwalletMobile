@@ -7,36 +7,122 @@ import {
   Image,
   StyleSheet,
   Dimensions,
+  ToastAndroid,
+  BackHandler,
 } from 'react-native';
 import {RectButton} from 'react-native-gesture-handler';
 import {IconButton} from 'react-native-paper';
 import DashboardChild from './../../../components/User/DashboardChild';
 import {useDispatch, useSelector} from 'react-redux';
 import {GetUser} from './../../../redux/actions/user';
-import {formatNumber} from './../../../helpers/index';
+import NumberFormat from 'react-number-format';
+import {io} from 'socket.io-client';
 
 const Home = (props) => {
   const dispatch = useDispatch();
-
   const {loading, data} = useSelector((s) => s.User);
   const Auth = useSelector((s) => s.Auth);
+  // const [touched, setTouched] = React.useState(false);
+  const [balance, setBalance] = React.useState(data?.balance);
+  const [exitApp, setExitApp] = React.useState(0);
+
+  const socket = io('http://192.168.43.31:8000', {
+    query: {itemId: Auth.data.id},
+  });
+  socket.emit('balance', Auth.data.id);
+
   React.useEffect(() => {
-    console.log(Auth.data.id);
+    const handleRefresh = () => {
+      dispatch(
+        GetUser({
+          id: Auth.data.id,
+          token: Auth.data.token,
+        }),
+      );
+    };
+
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      handleRefresh();
+    });
+    const backAction = () => {
+      setTimeout(() => {
+        setExitApp(0);
+      }, 2000); // 2 seconds to tap second-time
+
+      if (exitApp === 0) {
+        setExitApp(exitApp + 1);
+
+        ToastAndroid.show('Press Back Again to Exit App', ToastAndroid.SHORT);
+      } else if (exitApp === 1) {
+        BackHandler.exitApp();
+      }
+      return true;
+    };
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
     dispatch(
       GetUser({
         id: Auth.data.id,
         token: Auth.data.token,
       }),
     );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
+
+    return () => {
+      backHandler.remove();
+      unsubscribe;
+    };
+  }, [
+    dispatch,
+    data.balance,
+    data.avatar,
+    Auth.data.id,
+    Auth.data.token,
+    props.navigation,
+    exitApp,
+  ]);
+
+  React.useEffect(() => {
+    const handleRefresh2 = () => {
+      if (socket == null) return;
+
+      socket.on('newBalance', ({newBalance}) => {
+        console.log(newBalance, 'hasil soket on newBalance');
+        setBalance(newBalance);
+      });
+    };
+
+    const unsubscribe = props.navigation.addListener('focus', () => {
+      handleRefresh2();
+      socket.off('balance');
+      socket.off('newBalance');
+    });
+    if (socket == null) return;
+
+    socket.on('newBalance', ({newBalance}) => {
+      console.log(newBalance, 'hasil soket on newBalance');
+      setBalance(newBalance);
+    });
+    return () => {
+      handleRefresh2();
+      unsubscribe;
+      socket.off('newBalance');
+      socket.off('balance');
+    };
+  }, [socket, balance, setBalance, props.navigation, Auth.data.id]);
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="#6379F4" />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#6379F4"
+        color="#6379F4"
+      />
       <SafeAreaView style={styles2.container}>
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <RectButton onPress={() => props.navigation.navigate('Profile')}>
+              <RectButton onPress={() => props.navigation.push('Profile')}>
                 <Image
                   style={styles2.img}
                   source={{
@@ -49,15 +135,25 @@ const Home = (props) => {
             </View>
             <View style={styles2.flexFour}>
               <Text style={styles2.text}>Balance</Text>
-              <Text style={styles2.semiBold}>
-                Rp
-                {data.balance !== '0' || data.balance !== ''
-                  ? formatNumber(data.balance)
-                  : '0,-'}
-              </Text>
+              <NumberFormat
+                value={balance === data.balance ? balance : data.balance}
+                defaultValue="0"
+                decimalSeparator={','}
+                thousandSeparator={'.'}
+                displayType={'text'}
+                renderText={(value) => (
+                  <Text style={styles2.semiBold}>{value}</Text>
+                )}
+                prefix={'Rp'}
+                // suffix={',-'}
+              />
             </View>
             <View>
-              <IconButton icon="bell-outline" color="#fff" />
+              <RectButton
+                rippleColor="transparent"
+                onPress={() => props.navigation.navigate('Notification')}>
+                <IconButton icon="bell-outline" color="#fff" />
+              </RectButton>
             </View>
           </View>
         </View>
