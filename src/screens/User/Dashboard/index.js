@@ -26,7 +26,7 @@ const Home = (props) => {
   const [balance, setBalance] = React.useState(data?.balance);
   const [exitApp, setExitApp] = React.useState(0);
 
-  const socket = io('http://192.168.43.31:8000', {
+  const socket = io('http://34.193.25.222:8000', {
     query: {itemId: Auth.data.id},
   });
   socket.emit('balance', Auth.data.id);
