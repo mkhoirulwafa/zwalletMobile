@@ -1,6 +1,5 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {
   ChangePassword,
   ChangePin,
@@ -25,13 +24,13 @@ import {
   Transfer,
   TransferStatus,
 } from '../screens';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import messaging from '@react-native-firebase/messaging';
-
+import {AnimatedTabBarNavigator} from 'react-native-animated-nav-tab-bar';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {useDispatch, useSelector} from 'react-redux';
 import {UpdateUser} from '../redux/actions/user';
 import {createStackNavigator} from '@react-navigation/stack';
-
+import IonIcons from 'react-native-vector-icons/Ionicons';
 // const Tab = createMaterialBottomTabNavigator();
 
 function MyTabs(props) {
@@ -204,11 +203,117 @@ function MyTabs(props) {
     </>
   );
 }
+
+const tabs = {
+  Home: {
+    // < Screen name
+    labelStyle: {
+      color: '#5B37B7',
+    },
+    icon: {
+      component: <IonIcons name="grid-outline" />,
+      activeColor: 'rgba(91,55,183,1)',
+      inactiveColor: 'rgba(0,0,0,1)',
+    },
+    background: {
+      activeColor: 'rgba(223,215,243,1)',
+      inactiveColor: 'rgba(223,215,243,0)',
+    },
+  },
+  Profile: {
+    // < Screen name
+    labelStyle: {
+      color: '#1194AA',
+    },
+    icon: {
+      component: <IonIcons name="person-outline" />,
+      activeColor: 'rgba(17,148,170,1)',
+      inactiveColor: 'rgba(0,0,0,1)',
+    },
+    background: {
+      activeColor: 'rgba(207,235,239,1)',
+      inactiveColor: 'rgba(207,235,239,0)',
+    },
+  },
+};
+const Tabs = AnimatedTabBarNavigator();
+const CustomTabbar = () => {
+  return (
+    <Tabs.Navigator
+      tabBarOptions={{
+        activeTintColor: '#fff',
+        activeBackgroundColor: '#6379F4',
+        inactiveTintColor: '#222222',
+      }}
+      appereance={{
+        // floating: true,
+        tabBarBackground: '#6379F4',
+      }}>
+      <Tabs.Screen
+        name="Dashboard"
+        component={MyTabs}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <IonIcons
+              name="grid-outline"
+              size={size ? size : 24}
+              color={focused ? color : '#222222'}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Transfer"
+        component={Transfer}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <IonIcons
+              name="cash-outline"
+              size={size ? size : 24}
+              color={focused ? color : '#222222'}
+              focused={focused}
+            />
+          ),
+          tabBarBackground: '#000',
+        }}
+      />
+      <Tabs.Screen
+        name="Topup"
+        component={Topup}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <IonIcons
+              name="add-outline"
+              size={size ? size : 24}
+              color={focused ? color : '#222222'}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarIcon: ({focused, color, size}) => (
+            <IonIcons
+              name="person-outline"
+              size={size ? size : 24}
+              color={focused ? color : '#222222'}
+              focused={focused}
+            />
+          ),
+        }}
+      />
+    </Tabs.Navigator>
+  );
+};
 const MainNavigator = (props) => {
   return (
     <>
       <NavigationContainer>
-        <MyTabs navigation={props.navigation} />
+        <CustomTabbar navigation={props.navigation} />
       </NavigationContainer>
     </>
   );

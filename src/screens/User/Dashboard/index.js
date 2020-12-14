@@ -122,7 +122,7 @@ const Home = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <RectButton onPress={() => props.navigation.push('Profile')}>
+              <RectButton onPress={() => props.navigation.jumpTo('Profile')}>
                 <Image
                   style={styles2.img}
                   source={{
@@ -151,7 +151,7 @@ const Home = (props) => {
             <View>
               <RectButton
                 rippleColor="transparent"
-                onPress={() => props.navigation.navigate('Notification')}>
+                onPress={() => props.navigation.push('Notification')}>
                 <IconButton icon="bell-outline" color="#fff" />
               </RectButton>
             </View>

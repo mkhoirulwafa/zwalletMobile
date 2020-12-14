@@ -22,7 +22,7 @@ const TransactionHistory = (props) => {
             <View style={styles2.flexOne}>
               <RectButton
                 rippleColor="transparent"
-                onPress={() => props.navigation.goBack()}>
+                onPress={() => props.navigation.jumpTo('Dashboard')}>
                 <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>

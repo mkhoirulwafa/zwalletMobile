@@ -95,7 +95,7 @@ const DashboardChild = (props) => {
               <RectButton
                 style={styles2.btn}
                 backgroundColor="#E5E8ED"
-                onPress={() => props.navigation.push('Transfer')}
+                onPress={() => props.navigation.jumpTo('Transfer')}
                 uppercase={false}>
                 <IconButton icon="arrow-up" color="#6379F4" />
                 <View>
@@ -106,7 +106,7 @@ const DashboardChild = (props) => {
                 style={styles2.btn}
                 backgroundColor="#E5E8ED"
                 uppercase={false}
-                onPress={() => props.navigation.push('Topup')}>
+                onPress={() => props.navigation.jumpTo('Topup')}>
                 <IconButton icon="plus" color="#6379F4" />
                 <View>
                   <Text style={styles2.labelBtn}>Topup</Text>
@@ -131,17 +131,6 @@ const DashboardChild = (props) => {
         }
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItems}
-        ListFooterComponent={
-          <View style={styles2.flexFour}>
-            <RectButton
-              alignSelf="center"
-              onPress={() => props.navigation.push('TransactionDetails')}>
-              <View>
-                <Text style={styles2.primaryColor}>See More</Text>
-              </View>
-            </RectButton>
-          </View>
-        }
       />
     </>
   );

@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@gorhom/animated-tabbar": "^2.1.0",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-firebase/app": "^9.0.0",
@@ -20,11 +21,13 @@
     "@react-navigation/material-top-tabs": "^5.3.5",
     "@react-navigation/native": "^5.8.5",
     "@react-navigation/stack": "^5.12.2",
+    "add": "^2.0.6",
     "axios": "^0.21.0",
     "formik": "^2.2.4",
     "luxon": "^1.25.0",
     "react": "16.13.1",
     "react-native": "0.63.3",
+    "react-native-animated-nav-tab-bar": "^3.0.5",
     "react-native-bottomsheet-reanimated": "^0.0.22",
     "react-native-calendars": "^1.403.0",
     "react-native-extra-dimensions-android": "^1.2.5",
@@ -52,6 +55,7 @@
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^3.0.3",
+    "yarn": "^1.22.10",
     "yup": "^0.29.3"
   },
   "devDependencies": {
