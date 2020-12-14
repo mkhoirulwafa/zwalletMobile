@@ -1,4 +1,3 @@
-import {SETAUTH, SETAUTHLOGIN, SETAUTHLOGOUT, SETAUTHERROR} from '../types';
 const initialState = {
   data: [],
   loading: false,
@@ -6,11 +5,11 @@ const initialState = {
 
 const Auth = (state = initialState, action = {}) => {
   switch (action.type) {
-    case SETAUTH:
+    case 'LOGIN_REQUEST':
       return {...state, loading: true};
-    case SETAUTHLOGIN:
+    case 'LOGIN_SUCCESS':
       return {...state, loading: false, isLogin: true, data: action.payload};
-    case SETAUTHERROR:
+    case 'LOGIN_ERROR':
       return {
         ...state,
         loading: false,
@@ -18,13 +17,25 @@ const Auth = (state = initialState, action = {}) => {
         data: [],
         error: action.payload,
       };
-    case SETAUTHLOGOUT:
+    case 'LOGOUT':
       return {
         ...state,
         loading: false,
         isLogin: false,
         data: [],
         _persist: {rehydrate: true, version: -1},
+      };
+    case 'REGISTER_REQUEST':
+      return {...state, loading: true};
+    case 'REGISTER_SUCCESS':
+      return {...state, loading: false, isLogin: false, data: action.payload};
+    case 'REGISTER_ERROR':
+      return {
+        ...state,
+        loading: false,
+        isLogin: true,
+        data: [],
+        error: action.payload,
       };
 
     default:

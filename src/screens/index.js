@@ -1,5 +1,51 @@
-import {Login} from './Auth';
-
-export default {
+import {
   Login,
+  Register,
+  ResetPassword,
+  NewPassword,
+  CreatePin,
+  PinCreated,
+} from './Auth';
+import {
+  Home,
+  Topup,
+  Profile,
+  PersonalInfo,
+  ManagePhone,
+  NewPhone,
+  Transfer,
+  InputAmount,
+  Confirmation,
+  EnterPinConfirm,
+  TransferStatus,
+  ChangePassword,
+  ChangePin,
+  NewPin,
+  TransactionHistory,
+  Notification,
+} from './User';
+
+export {
+  Login,
+  Register,
+  ResetPassword,
+  NewPassword,
+  CreatePin,
+  PinCreated,
+  Home,
+  Topup,
+  Profile,
+  PersonalInfo,
+  ChangePassword,
+  ChangePin,
+  NewPin,
+  ManagePhone,
+  NewPhone,
+  TransactionHistory,
+  Transfer,
+  InputAmount,
+  Confirmation,
+  EnterPinConfirm,
+  TransferStatus,
+  Notification,
 };
