@@ -10,6 +10,3 @@
 - Javascript
 - Chart.js
 - Bootstrap
-
-**Link on Netlify**
-[Zwallet](zwallet-mkhoirulwafa.netlify.app)
