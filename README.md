@@ -20,7 +20,7 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
   
   
 
-<!-- <p align="center">
+<p align="center">
 
 <a href="https://github.com/userexynos/ZWallet-HTML-Project/blob/master/LICENSE">
 
@@ -28,22 +28,9 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 
 </a>
 
-</p> -->
+</p> 
 
   
-
-### # SCREENSHOTS
-
-![Login Page](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Login-Zwallet.jpg?raw=true)
-
-![Group 2](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Home-Zwallet.jpg?raw=true)
-
-![Group 3](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Transfer-Zwallet.jpg?raw=true)
-
-![Group 4](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Notification-Zwallet.jpg?raw=true)
-
-![Group 5](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Profile-Zwallet.jpg?raw=true)
-
   
 
 ### # ABOUT THIS PROJECT
@@ -79,4 +66,16 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 3. Run on your terminal
 	```
 		~$ npx react-native run-android
-	``` 
+	```
+
+### # SCREENSHOTS
+
+![Login Page](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Login-Zwallet.jpg?raw=true)
+
+![Group 2](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Home-Zwallet.jpg?raw=true)
+
+![Group 3](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Transfer-Zwallet.jpg?raw=true)
+
+![Group 4](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Notification-Zwallet.jpg?raw=true)
+
+![Group 5](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Profile-Zwallet.jpg?raw=true)
