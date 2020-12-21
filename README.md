@@ -1,33 +1,82 @@
-<h1 align="center">
-  ZWallet Mobile App
+
+<h1  align="center">
+
+Z-Wallet Mobile App
+
 </h1>
 
-<!-- <p align="center">
-	<strong>Simpan uang tanpa dompet</strong><br>
-	Katakan <strong>Selamat Tinggal</strong> pada dompetmu <i>Sekarang</i>.
-</p> -->
+  
+
+<p  align="center">
+
+Suka ribet buka-buka dompet buat ngeluarin uang?
+
+<br/>
+
+Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
+
+</p>
+
+  
+  
 
 <!-- <p align="center">
-  <a href="https://github.com/userexynos/ZWallet-HTML-Project/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="ZWallet is released under the MIT license." />
-  </a>
+
+<a href="https://github.com/userexynos/ZWallet-HTML-Project/blob/master/LICENSE">
+
+<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="ZWallet is released under the MIT license." />
+
+</a>
+
 </p> -->
 
-### PREVIEW
-![Group 3](https://user-images.githubusercontent.com/69374541/101909835-a61c6280-3bf0-11eb-9f01-938dd8dda646.jpg)
+  
 
+### # SCREENSHOTS
 
+![Login Page](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Login-Zwallet.jpg?raw=true)
 
+![Group 2](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Home-Zwallet.jpg?raw=true)
 
-### ABOUT THIS PROJECT
-Project yang saya buat kali ini bernama <strong>ZWallet</strong> yang mempunyai tujuan untuk menyimpan uang dalam keadaan virtual tanpa harus menaruh uang di dalam dompet. <strong>ZWallet</strong> juga dibekali dengan fitur transfer saldo, top up game dan lainnya yang berhubungan dengan virtual.
+![Group 3](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Transfer-Zwallet.jpg?raw=true)
 
-Saat ini <strong>ZWallet</strong> dibuat dengan <strong>React Native</strong>.
+![Group 4](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Notification-Zwallet.jpg?raw=true)
 
-### # HOW TO INSTALL
+![Group 5](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Profile-Zwallet.jpg?raw=true)
 
-Download the projects:
+  
 
-```
-~$ git clone https://github.com/userexynos/Frontend-Team
-```
+### # ABOUT THIS PROJECT
+
+<strong>Zwallet</strong> adalah aplikasi dompet digital yang menyederhanakan kebutuhan finansial anda dan dapat menghemat banyak waktu dalam kebutuhan perbankan hanya dengan satu aplikasi. <strong>Zwallet</strong> berada di bidang perbankan digital yang kian hari makin pesat perkembangan nya dengan seiring teknologi yang semakin maju. <strong>Zwallet</strong> berfokus pada penggunaan global atau untuk semua pengguna di dunia. Memiliki ratusan Trusted Partner membuat <strong>Zwallet</strong> memiliki Kredibilitas tinggi. <strong>Zwallet</strong> ini adalah mampu menyimpan uang, melakukan transfer antar pengguna maupun ke bank lokal.
+
+### # WHAT IS USED HERE
+
+ - [React Native](http://reactnative.dev/)
+ - [MySQL](https://www.mysql.com/)
+ - [ExpressJS](http://expressjs.com/)
+ - [React Navigation](https://reactnavigation.org/)
+ - [Redux](https://redux.js.org/)
+
+  
+  
+
+### # HOW TO RUN THIS APP
+
+ 
+ 1. Make Sure you had clone the repo
+	```
+		~$ git clone https://github.com/mkhoirulwafa/zwalletMobile.git
+	```
+2. Open the project and run on terminal 
+	```
+		~$ npm install
+	```
+	or
+	```
+		~$ yarn
+	```
+3. Run on your terminal
+	```
+		~$ npx react-native run-android
+	``` 
