@@ -204,116 +204,116 @@ function MyTabs(props) {
   );
 }
 
-const tabs = {
-  Home: {
-    // < Screen name
-    labelStyle: {
-      color: '#5B37B7',
-    },
-    icon: {
-      component: <IonIcons name="grid-outline" />,
-      activeColor: 'rgba(91,55,183,1)',
-      inactiveColor: 'rgba(0,0,0,1)',
-    },
-    background: {
-      activeColor: 'rgba(223,215,243,1)',
-      inactiveColor: 'rgba(223,215,243,0)',
-    },
-  },
-  Profile: {
-    // < Screen name
-    labelStyle: {
-      color: '#1194AA',
-    },
-    icon: {
-      component: <IonIcons name="person-outline" />,
-      activeColor: 'rgba(17,148,170,1)',
-      inactiveColor: 'rgba(0,0,0,1)',
-    },
-    background: {
-      activeColor: 'rgba(207,235,239,1)',
-      inactiveColor: 'rgba(207,235,239,0)',
-    },
-  },
-};
-const Tabs = AnimatedTabBarNavigator();
-const CustomTabbar = () => {
-  return (
-    <Tabs.Navigator
-      tabBarOptions={{
-        activeTintColor: '#fff',
-        activeBackgroundColor: '#6379F4',
-        inactiveTintColor: '#222222',
-      }}
-      appereance={{
-        // floating: true,
-        tabBarBackground: '#6379F4',
-      }}>
-      <Tabs.Screen
-        name="Dashboard"
-        component={MyTabs}
-        options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <IonIcons
-              name="grid-outline"
-              size={size ? size : 24}
-              color={focused ? color : '#222222'}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Transfer"
-        component={Transfer}
-        options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <IonIcons
-              name="cash-outline"
-              size={size ? size : 24}
-              color={focused ? color : '#222222'}
-              focused={focused}
-            />
-          ),
-          tabBarBackground: '#000',
-        }}
-      />
-      <Tabs.Screen
-        name="Topup"
-        component={Topup}
-        options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <IonIcons
-              name="add-outline"
-              size={size ? size : 24}
-              color={focused ? color : '#222222'}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({focused, color, size}) => (
-            <IonIcons
-              name="person-outline"
-              size={size ? size : 24}
-              color={focused ? color : '#222222'}
-              focused={focused}
-            />
-          ),
-        }}
-      />
-    </Tabs.Navigator>
-  );
-};
+// const tabs = {
+//   Home: {
+//     // < Screen name
+//     labelStyle: {
+//       color: '#5B37B7',
+//     },
+//     icon: {
+//       component: <IonIcons name="grid-outline" />,
+//       activeColor: 'rgba(91,55,183,1)',
+//       inactiveColor: 'rgba(0,0,0,1)',
+//     },
+//     background: {
+//       activeColor: 'rgba(223,215,243,1)',
+//       inactiveColor: 'rgba(223,215,243,0)',
+//     },
+//   },
+//   Profile: {
+//     // < Screen name
+//     labelStyle: {
+//       color: '#1194AA',
+//     },
+//     icon: {
+//       component: <IonIcons name="person-outline" />,
+//       activeColor: 'rgba(17,148,170,1)',
+//       inactiveColor: 'rgba(0,0,0,1)',
+//     },
+//     background: {
+//       activeColor: 'rgba(207,235,239,1)',
+//       inactiveColor: 'rgba(207,235,239,0)',
+//     },
+//   },
+// };
+// const Tabs = AnimatedTabBarNavigator();
+// const CustomTabbar = () => {
+//   return (
+//     <Tabs.Navigator
+//       tabBarOptions={{
+//         activeTintColor: '#fff',
+//         activeBackgroundColor: '#6379F4',
+//         inactiveTintColor: '#222222',
+//       }}
+//       appereance={{
+//         // floating: true,
+//         tabBarBackground: '#6379F4',
+//       }}>
+//       <Tabs.Screen
+//         name="Dashboard"
+//         component={MyTabs}
+//         options={{
+//           tabBarIcon: ({focused, color, size}) => (
+//             <IonIcons
+//               name="grid-outline"
+//               size={size ? size : 24}
+//               color={focused ? color : '#222222'}
+//               focused={focused}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tabs.Screen
+//         name="Transfer"
+//         component={Transfer}
+//         options={{
+//           tabBarIcon: ({focused, color, size}) => (
+//             <IonIcons
+//               name="cash-outline"
+//               size={size ? size : 24}
+//               color={focused ? color : '#222222'}
+//               focused={focused}
+//             />
+//           ),
+//           tabBarBackground: '#000',
+//         }}
+//       />
+//       <Tabs.Screen
+//         name="Topup"
+//         component={Topup}
+//         options={{
+//           tabBarIcon: ({focused, color, size}) => (
+//             <IonIcons
+//               name="add-outline"
+//               size={size ? size : 24}
+//               color={focused ? color : '#222222'}
+//               focused={focused}
+//             />
+//           ),
+//         }}
+//       />
+//       <Tabs.Screen
+//         name="Profile"
+//         component={Profile}
+//         options={{
+//           tabBarIcon: ({focused, color, size}) => (
+//             <IonIcons
+//               name="person-outline"
+//               size={size ? size : 24}
+//               color={focused ? color : '#222222'}
+//               focused={focused}
+//             />
+//           ),
+//         }}
+//       />
+//     </Tabs.Navigator>
+//   );
+// };
 const MainNavigator = (props) => {
   return (
     <>
       <NavigationContainer>
-        <CustomTabbar navigation={props.navigation} />
+        <MyTabs navigation={props.navigation} />
       </NavigationContainer>
     </>
   );

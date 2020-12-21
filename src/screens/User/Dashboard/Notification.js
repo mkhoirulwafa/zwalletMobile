@@ -26,7 +26,7 @@ const Notification = (props) => {
             <View style={styles2.flexOne}>
               <RectButton
                 rippleColor="transparent"
-                onPress={() => props.navigation.jumpTo('Dashboard')}>
+                onPress={() => props.navigation.navigate('Dashboard')}>
                 <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>

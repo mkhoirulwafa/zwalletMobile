@@ -296,7 +296,7 @@ const Profile = (props) => {
               <View style={styles2.flexTwo}>
                 <RectButton
                   rippleColor="transparent"
-                  onPress={() => props.navigation.jumpTo('Dashboard')}>
+                  onPress={() => props.navigation.navigate('Dashboard')}>
                   <View>
                     <IconButton icon="arrow-left" color="#514F5B" />
                   </View>

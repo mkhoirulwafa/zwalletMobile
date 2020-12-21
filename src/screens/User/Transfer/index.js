@@ -65,7 +65,7 @@ const Transfer = (props) => {
             <View style={styles2.flexTwo}>
               <RectButton
                 rippleColor="transparent"
-                onPress={() => props.navigation.jumpTo('Dashboard')}>
+                onPress={() => props.navigation.navigate('Dashboard')}>
                 <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>
@@ -151,7 +151,7 @@ const Transfer = (props) => {
                   alignSelf="center"
                   onPress={() => setLimit(limit + 3)}>
                   <View>
-                    <Text style={styles2.primaryColor}>See More</Text>
+                    <Text style={styles2.primaryColor}>Load More</Text>
                   </View>
                 </RectButton>
               </View>

@@ -122,7 +122,7 @@ const Home = (props) => {
         <View style={styles2.wrapperTop}>
           <View style={styles2.fullFlex}>
             <View style={styles2.flexTwo}>
-              <RectButton onPress={() => props.navigation.jumpTo('Profile')}>
+              <RectButton onPress={() => props.navigation.navigate('Profile')}>
                 <Image
                   style={styles2.img}
                   source={{

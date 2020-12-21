@@ -22,7 +22,7 @@ const Topup = (props) => {
             <View style={styles2.flexTwo}>
               <RectButton
                 rippleColor="transparent"
-                onPress={() => props.navigation.jumpTo('Dashboard')}>
+                onPress={() => props.navigation.navigate('Dashboard')}>
                 <IconButton icon="arrow-left" color="#fff" />
               </RectButton>
             </View>

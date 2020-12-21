@@ -202,7 +202,7 @@ const TransactionHistoryChild = (props) => {
                 alignSelf="center"
                 onPress={() => setWeekLimit(limit + 3)}>
                 <View>
-                  <Text style={styles2.primaryColor}>See More</Text>
+                  <Text style={styles2.primaryColor}>Load More</Text>
                 </View>
               </RectButton>
             </View>
