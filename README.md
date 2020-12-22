@@ -27,7 +27,7 @@ Z-Wallet Mobile App
 ### # DEMO
 
    ## Login
-   <img src='./src/assets/SS/login.gif' alt='Zwallet Login'>
+   <img src='./src/assets/SS/notification.gif' alt='Zwallet Login' height='720>
   
 
 ### # ABOUT THIS PROJECT
