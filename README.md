@@ -7,14 +7,7 @@ Z-Wallet Mobile App
 
   
 
-<p  align="center">
-
-Suka ribet buka-buka dompet buat ngeluarin uang?
-
-<br/>
-
-Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
-
+<p  align="center">Suka ribet buka-buka dompet buat ngeluarin uang?<br/>Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 </p>
 
   
@@ -31,6 +24,10 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 </p> 
 
   
+### # DEMO
+
+   ## Login
+   <img src='./src/assets/SS/login.gif' alt='Zwallet Login'>
   
 
 ### # ABOUT THIS PROJECT
@@ -68,7 +65,7 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 		~$ npx react-native run-android
 	```
 
-### # SCREENSHOTS
+<!-- ### # SCREENSHOTS
 
 ![Login Page](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Login-Zwallet.jpg?raw=true)
 
@@ -78,4 +75,4 @@ Simpan aja uangmu di <strong>Z-Wallet</strong> Sekarang!
 
 ![Group 4](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Notification-Zwallet.jpg?raw=true)
 
-![Group 5](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Profile-Zwallet.jpg?raw=true)
+![Group 5](https://github.com/mkhoirulwafa/zwalletMobile/blob/master/src/assets/SS/Profile-Zwallet.jpg?raw=true) -->
